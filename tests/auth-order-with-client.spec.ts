@@ -15,3 +15,20 @@ test('get orders with api client', async ({ request }) => {
 
   expect(ordersBefore.length < ordersAfter.length).toBeTruthy()
 })
+
+test('login + create + delete order by ID (via api client)', async ({ request }) => {
+  const api = await ApiClient.create(request)
+
+  const orderId = await api.createOrderAndReturnOrderId()
+  expect(orderId).toBeDefined()
+
+  const delStatus = await api.deleteOrderById(orderId)
+  expect(delStatus).toBe(200)
+
+  const getAfterDelete = await api.getOrderById(orderId)
+  if (getAfterDelete.status === 200) {
+    expect(getAfterDelete.emptyBody === true).toBeTruthy()
+  } else {
+    expect(getAfterDelete.status).toBe(404)
+  }
+})
