@@ -8,10 +8,7 @@ export class LoginDTO {
   }
 
   static createLoginWithCorrectData(): LoginDTO {
-    return new LoginDTO(
-      process.env.API_USERNAME || '',
-      process.env.API_PASSWORD || ''
-    )
+    return new LoginDTO(process.env.API_USERNAME || '', process.env.API_PASSWORD || '')
   }
 
   static createLoginWithBrokenData(): LoginDTO {
